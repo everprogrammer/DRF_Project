@@ -7,6 +7,8 @@ from rest_framework import status
 from django.http import Http404
 from rest_framework import permissions
 from .permissions import IsOwnerOrReadOnly
+from rest_framework.exceptions import PermissionDenied
+
 
 
 # Create your views here.
@@ -64,4 +66,15 @@ class CustomUserListView(generics.ListAPIView):
 class CustomUserDetailView(generics.RetrieveAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
+
+class AddProductView(generics.CreateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        if self.request.user.user_type == 'Seller':
+            serializer.save(seller=self.request.user)
+        else:
+            raise PermissionDenied('Only sellers can sell products!')
 
