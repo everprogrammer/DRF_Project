@@ -1,10 +1,15 @@
 from rest_framework import serializers
-from rest_framework.permissions import IsAuthenticated
-from django.db import models
-from commerce.models import CustomUser
-from django.contrib.auth import authenticate
-from django.contrib.auth.hashers import make_password
+from auth_app.models import CustomUser
 
+
+class CustomUserSerializer(serializers.ModelSerializer):
+    # products = serializers.PrimaryKeyRelatedField(many=True, queryset=Product.objects.all())
+
+    class Meta:
+        model = CustomUser
+        fields = '__all__'
+
+        
 # Register serializer
 class RegisterSerializer(serializers.ModelSerializer):
 

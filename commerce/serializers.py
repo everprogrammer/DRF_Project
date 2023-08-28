@@ -1,12 +1,5 @@
 from rest_framework import serializers
-from .models import CustomUser, Product
-
-class CustomUserSerializer(serializers.ModelSerializer):
-    # products = serializers.PrimaryKeyRelatedField(many=True, queryset=Product.objects.all())
-
-    class Meta:
-        model = CustomUser
-        fields = '__all__'
+from .models import Product
 
 class ProductSerializer(serializers.ModelSerializer):
     seller = serializers.ReadOnlyField(source='seller.username')

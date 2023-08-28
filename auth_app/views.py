@@ -1,10 +1,11 @@
 from django.shortcuts import render
 
 from rest_framework.response import Response
-from commerce.models import Product, CustomUser
-from commerce.serializers import ProductSerializer
+from .models import CustomUser
+from .serializers import CustomUserSerializer
 from .serializers import RegisterSerializer
 from rest_framework.permissions import AllowAny
+from rest_framework import generics
 
 
 from rest_framework.decorators import api_view
@@ -12,6 +13,15 @@ from rest_framework.views import APIView
 
 from rest_framework import status
 # Create your views here.``
+
+class CustomUserListView(generics.ListAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = CustomUserSerializer
+
+class CustomUserDetailView(generics.RetrieveAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = CustomUserSerializer
+
 
 class RegisterAPIView(APIView):
     permission_classes = (AllowAny, )
@@ -34,6 +44,3 @@ class RegisterAPIView(APIView):
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
-
-class LoginAPIView(APIView):
-    """"""
