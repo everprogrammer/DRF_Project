@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import CustomUser, Product
 
 class CustomUserSerializer(serializers.ModelSerializer):
-    products = serializers.PrimaryKeyRelatedField(many=True, queryset=Product.objects.all())
+    # products = serializers.PrimaryKeyRelatedField(many=True, queryset=Product.objects.all())
 
     class Meta:
         model = CustomUser
